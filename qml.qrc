@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>qtquickcontrols2.conf</file>
+        <file>Page1GUI.qml</file>
+        <file>Page2GUI.qml</file>
+        <file>image/list.png</file>
+        <file>image/settings.png</file>
+        <file>Page3GUI.qml</file>
+        <file>image/back.png</file>
+        <file>image/logo.png</file>
+        <file>image/avatar.jpg</file>
+    </qresource>
+</RCC>
