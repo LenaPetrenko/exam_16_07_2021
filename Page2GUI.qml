@@ -55,13 +55,14 @@ property StackView stackView: StackView.view
                     color: "white"
                 }
                 flat: true
-//                  onClicked: {
-//                    swipeView.goBack()
-//                  }
+                onClicked: {
+                   swipeView.currentIndex = 0
+                }
             }
         }
 
     }
+
 
     GridLayout{
 
@@ -73,11 +74,14 @@ property StackView stackView: StackView.view
             MouseArea {
             anchors.fill: parent
             Layout.fillWidth: true
-            onClicked: fileDialoglab.open()
-            FileDialog {
-                    id: fileDialoglab
-                    folder: "/Users/admin/Desktop"
-                }
+            onClicked: fileDialog.open()
+
+                        FileDialog {
+                            id: fileDialog
+                            folder:     "/Users/admin/Desktop"
+//                            nameFilters: [ "Music files (*.mp4 *.avi *.mkv *.mov)"]
+
+                        }
             }
             id: img
             Layout.row: 0
@@ -85,7 +89,7 @@ property StackView stackView: StackView.view
             Layout.columnSpan: 2
             Layout.fillHeight: true
             Layout.fillWidth: true
-            source: "qrc:/image/avatar.jpg"
+            source: if (fileDialog.fileUrl == 0) "qrc:/image/avatar.jpg"; else fileDialog.fileUrl
 //                  Layout.margins: 5
             Layout.alignment: Qt.AlignCenter
             fillMode: Image.PreserveAspectFit //равномерное масштабирование изображения, чтобы соответствовать без обрезки
@@ -130,10 +134,8 @@ property StackView stackView: StackView.view
           Layout.columnSpan: 2
           Layout.alignment: Qt.AlignCenter
           onClicked: {
-              lena.append({
-                              "ava": img.source,
-                              "login": inputlogin.text,
-                          });
+              mylog.text = inputlogin.text
+              mainimg.source = img.source
 
           }
         }

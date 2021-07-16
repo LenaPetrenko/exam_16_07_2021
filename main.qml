@@ -16,6 +16,7 @@ ApplicationWindow {
     ListModel{
         id: lena
     }
+
     header : Rectangle {
     id: header
     color: "#2f2f2f"
@@ -72,39 +73,123 @@ ApplicationWindow {
 
     }
 
+
+
     Drawer {
         id: drawer
         width: Math.min(mainWindow.width, mainWindow.height) / 3 * 2
         height: mainWindow.height
 //        dragMargin: stackView.depth > 1 ? 0 : undefined
+GridLayout{
+    anchors.fill: drawer
 
-        ListView {
-            id: listView
+    Image{
+        id: mainimg
+        Layout.row: 0
+        Layout.column: 0
+        sourceSize.width: 100
+               sourceSize.height: 100
+        source: "qrc:/image/avatar.jpg"
+Layout.margins: 5
+        Layout.alignment: Qt.AlignCenter
 
-            focus: true
-            currentIndex: -1
-            anchors.fill: parent
+        property bool rounded: true //вводим временую переменеую
 
-            delegate: ItemDelegate {
-                width: parent.width
-                text: model.title
-                highlighted: ListView.isCurrentItem
-                onClicked: {
-                    listView.currentIndex = index
-                    stackView.push(model.source)
-                    drawer.close()
+        layer.enabled: rounded
+        layer.effect: OpacityMask {
+            maskSource: Item {
+                width: mainimg.width
+                height: mainimg.height
+                Rectangle {
+                    anchors.centerIn: parent
+                    width: mainimg.adapt ? mainimg.width : Math.min(mainimg.width, mainimg.height)
+                    height: mainimg.adapt ? mainimg.height : width
+                    radius: Math.min(width, height)
                 }
             }
+        }
+    }
+    Label{
+    text: "login"
+    id: mylog
+    Layout.row: 0
+    Layout.column: 1
+    Layout.margins: 5
+    Layout.alignment: Qt.AlignCenter
 
-            model: ListModel {
-                ListElement { title: "Публикации"; source: "qrc:/Page1GUI.qml" }
-                ListElement { title: "Профиль"; source: "qrc:/Page2GUI.qml" }
-                ListElement { title: "О программе"; source: "qrc:/Page3GUI.qml" }
-            }
+    }
+
+
+
+    Button{
+        Layout.margins: 5
+    Layout.row: 1
+    Layout.column: 0
+    Layout.columnSpan: 2
+    text: "Публикации"
+    onClicked: {
+        swipeView.currentIndex = 0
+        drawer.close()
+    }
+    background: Rectangle {
+        implicitWidth: 100
+        implicitHeight: 40
+        opacity: enabled ? 1 : 0.3
+        border.color: "white"
+        border.width: 1
+        radius: 2
+    }
+    }
+
+    Button{
+        Layout.margins: 5
+    Layout.row: 2
+    Layout.column: 0
+    Layout.columnSpan: 2
+    text: "Профиль"
+    onClicked: {
+        swipeView.currentIndex = 1
+        drawer.close()
+    }
+    background: Rectangle {
+        implicitWidth: 100
+        implicitHeight: 40
+        opacity: enabled ? 1 : 0.3
+        border.color: "white"
+        border.width: 1
+        radius: 2
+    }
+    }
+
+    Button{
+        Layout.margins: 5
+    Layout.row: 3
+    Layout.column: 0
+    Layout.columnSpan: 2
+    text: "О программе"
+    onClicked: {
+        swipeView.currentIndex = 2
+        drawer.close()
+    }
+    background: Rectangle {
+        implicitWidth: 100
+        implicitHeight: 40
+        opacity: enabled ? 1 : 0.3
+        border.color: "white"
+        border.width: 1
+        radius: 2
+    }
+    }
+
+
+                }
+
+
+
 
             ScrollIndicator.vertical: ScrollIndicator { }
         }
-    }
+
 
     StackView {
         id: stackView
@@ -115,12 +200,6 @@ ApplicationWindow {
         }
 
     }
-
-//    Loader{
-//    id:loader
-//    anchors.fill: parent
-////    source: "qrc:/Page1GUI.qml"
-//    }
 
     SwipeView {
         id: swipeView
@@ -140,5 +219,7 @@ ApplicationWindow {
         id: foot1
         color: "#2f2f2f"
         height: 50
+
     }
 }
+

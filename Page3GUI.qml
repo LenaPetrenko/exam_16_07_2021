@@ -54,7 +54,8 @@ property StackView stackView: StackView.view
                   }
                   flat: true
                   onClicked: {
-                    swipeView.currentIndex = Page1GUI
+
+                     swipeView.currentIndex = 0
                   }
               }
           }
